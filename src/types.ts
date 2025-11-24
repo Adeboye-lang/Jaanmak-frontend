@@ -51,6 +51,7 @@ export interface Order {
     postalCode?: string;
     country?: string;
     phone?: string;
+    method?: string;
   };
   paymentMethod: string;
   paymentResult?: {
