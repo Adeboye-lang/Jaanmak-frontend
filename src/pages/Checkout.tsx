@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { ShieldCheck, ArrowLeft, Lock } from 'lucide-react';
 import { api } from '../services/api';
-import PaystackPop from '@paystack/checkout-js';
+
 import { GIG_CENTERS } from '../data/gigCenters';
 
 const NIGERIAN_STATES = [
@@ -161,7 +161,7 @@ const Checkout: React.FC = () => {
       return;
     }
 
-    const paystack = new PaystackPop();
+    const paystack = new (window as any).PaystackPop();
     paystack.newTransaction({
       key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
       email: user?.email,
