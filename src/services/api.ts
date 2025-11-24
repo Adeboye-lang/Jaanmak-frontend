@@ -1,6 +1,6 @@
 import { SKINCARE_PRODUCTS } from '../data/products';
 const USE_MOCK = false;
-const BASE_URL = 'https://jaanmak-backend.onrender.com';
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://jaanmak-backend.onrender.com') + '/api';
 
 const handleResponse = async (res: Response) => {
   if (!res.ok) {
