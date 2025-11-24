@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { ShieldCheck, ArrowLeft, Lock } from 'lucide-react';
 import { api } from '../services/api';
-import { usePaystackPayment } from 'react-paystack';
+import PaystackPop from '@paystack/checkout-js';
 import { GIG_CENTERS } from '../data/gigCenters';
 
 const NIGERIAN_STATES = [
@@ -90,7 +90,7 @@ const Checkout: React.FC = () => {
     publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '',
   };
 
-  const initializePayment = usePaystackPayment(config);
+
 
   const onSuccess = async (reference: any) => {
     setLoading(true);
@@ -161,7 +161,18 @@ const Checkout: React.FC = () => {
       return;
     }
 
-    initializePayment({ onSuccess, onClose });
+    const paystack = new PaystackPop();
+    paystack.newTransaction({
+      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+      email: user?.email,
+      amount: grandTotal * 100,
+      onSuccess: (transaction: any) => {
+        onSuccess(transaction);
+      },
+      onCancel: () => {
+        onClose();
+      }
+    });
   };
 
   if (cart.length === 0) return null;
