@@ -75,11 +75,11 @@ const Skincare: React.FC = () => {
                 <p className="text-xs font-bold text-pink-500 uppercase tracking-widest mb-1">{product.category}</p>
                 <Link to={`/product/${product.id}`}><h3 className="text-xl font-serif font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors">{product.name}</h3></Link>
                 <p className="text-sm text-gray-500 mb-6 line-clamp-2">{product.description}</p>
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                <div className="flex flex-wrap gap-2 items-center justify-between mt-auto pt-4 border-t border-gray-50">
                   <span className="text-lg font-medium text-gray-900">₦{product.price.toLocaleString()}</span>
                   <span className={`text-xs font-bold px-2 py-1 rounded-full ${(product.countInStock || 0) === 0 ? 'bg-red-100 text-red-600' :
-                      (product.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
-                        'bg-green-100 text-green-600'
+                    (product.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
+                      'bg-green-100 text-green-600'
                     }`}>
                     {(product.countInStock || 0) === 0 ? 'Out of Stock' :
                       (product.countInStock || 0) < 10 ? `Only ${product.countInStock} left!` :
