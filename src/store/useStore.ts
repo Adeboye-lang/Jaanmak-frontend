@@ -122,15 +122,15 @@ export const useStore = create<StoreState>()(
             refreshProducts: async () => {
                 try {
                     const data = await api.products.getAll();
-                    if (data && Array.isArray(data) && data.length > 0) {
+                    if (data && Array.isArray(data)) {
                         const mapped = data.map((p: any) => ({ ...p, id: p._id || p.id }));
                         set({ products: mapped });
                     } else {
-                        set({ products: SKINCARE_PRODUCTS });
+                        set({ products: [] });
                     }
                 } catch (e) {
-                    console.error("Failed to fetch products, using static data:", e);
-                    set({ products: SKINCARE_PRODUCTS });
+                    console.error("Failed to fetch products:", e);
+                    set({ products: [] });
                 }
             },
             addProduct: async (productData) => {

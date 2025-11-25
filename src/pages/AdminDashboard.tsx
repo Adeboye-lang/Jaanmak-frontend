@@ -96,6 +96,29 @@ const AdminDashboard: React.FC = () => {
       }
    };
 
+   const handleSeedDatabase = async () => {
+      if (window.confirm('This will import all demo products into your database. Continue?')) {
+         setIsSubmitting(true);
+         try {
+            const { SKINCARE_PRODUCTS } = await import('../data/products');
+            let count = 0;
+            for (const p of SKINCARE_PRODUCTS) {
+               // Remove ID to let MongoDB generate a new one
+               const { id, ...productData } = p;
+               await addProduct(productData);
+               count++;
+            }
+            alert(`Successfully imported ${count} products!`);
+            refreshProducts();
+         } catch (error) {
+            console.error(error);
+            alert('Failed to seed database.');
+         } finally {
+            setIsSubmitting(false);
+         }
+      }
+   };
+
    return (
       <div className="min-h-screen bg-[#FFF9F9] flex flex-col md:flex-row font-sans">
          {/* Sidebar */}
@@ -162,7 +185,10 @@ const AdminDashboard: React.FC = () => {
                      </div>
                      <div className="bg-gradient-to-br from-pink-500 to-rose-400 p-6 rounded-[2rem] shadow-lg text-white flex flex-col justify-center items-center text-center">
                         <h3 className="text-pink-100 text-xs font-bold uppercase tracking-wider mb-2">Quick Action</h3>
-                        <button onClick={() => setActiveTab('products')} className="bg-white text-pink-600 px-6 py-2 rounded-xl font-bold text-sm hover:bg-pink-50 transition-colors w-full">Add Product</button>
+                        <div className="flex flex-col gap-2 w-full">
+                           <button onClick={() => setActiveTab('products')} className="bg-white text-pink-600 px-6 py-2 rounded-xl font-bold text-sm hover:bg-pink-50 transition-colors w-full">Add Product</button>
+                           <button onClick={handleSeedDatabase} className="bg-pink-600 text-white border border-pink-400 px-6 py-2 rounded-xl font-bold text-sm hover:bg-pink-700 transition-colors w-full">Import Demo Data</button>
+                        </div>
                      </div>
                   </div>
 
