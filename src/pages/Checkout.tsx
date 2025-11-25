@@ -161,18 +161,28 @@ const Checkout: React.FC = () => {
       return;
     }
 
-    const paystack = new (window as any).PaystackPop();
-    paystack.newTransaction({
-      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
-      email: user?.email,
-      amount: grandTotal * 100,
-      onSuccess: (transaction: any) => {
-        onSuccess(transaction);
-      },
-      onCancel: () => {
-        onClose();
+    try {
+      if (typeof (window as any).PaystackPop === 'undefined') {
+        alert("Paystack failed to load. Please check your internet connection or disable ad-blockers.");
+        return;
       }
-    });
+
+      const paystack = new (window as any).PaystackPop();
+      paystack.newTransaction({
+        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+        email: user?.email,
+        amount: grandTotal * 100,
+        onSuccess: (transaction: any) => {
+          onSuccess(transaction);
+        },
+        onCancel: () => {
+          onClose();
+        }
+      });
+    } catch (error: any) {
+      console.error("Paystack Error:", error);
+      alert("Payment initialization failed: " + error.message);
+    }
   };
 
   if (cart.length === 0) return null;
