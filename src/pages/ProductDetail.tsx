@@ -7,9 +7,13 @@ import { ArrowLeft, ShoppingBag, Plus, Minus, Facebook, Twitter, Phone } from 'l
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addToCart, products } = useStore();
+  const { addToCart, products, refreshProducts } = useStore();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    refreshProducts();
+  }, []);
 
   useEffect(() => {
     if (id && products.length > 0) {

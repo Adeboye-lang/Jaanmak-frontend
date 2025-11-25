@@ -7,10 +7,14 @@ import type { Product } from '../types';
 const ITEMS_PER_PAGE = 9;
 
 const Skincare: React.FC = () => {
-  const { addToCart, products, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+  const { addToCart, products, addToWishlist, removeFromWishlist, isInWishlist, refreshProducts } = useStore();
   const [notification, setNotification] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    refreshProducts();
+  }, []);
 
   const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
