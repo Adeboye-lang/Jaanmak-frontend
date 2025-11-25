@@ -23,7 +23,7 @@ const ProductDetail: React.FC = () => {
   const isOutOfStock = !product.inStock || (product.countInStock !== undefined && product.countInStock <= 0);
   const handleQuantityChange = (delta: number) => setQuantity(prev => Math.max(1, prev + delta));
   const shareUrl = window.location.href;
-  const shareText = `Check out ${product.name} on JAANMAK!`;
+  const shareText = `check out this product on jaanmak`;
 
   const relatedProducts = products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3);
 
@@ -147,7 +147,7 @@ const ProductDetail: React.FC = () => {
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
                           await navigator.share({
                             title: product.name,
-                            text: shareText,
+                            text: `${shareText}\n${shareUrl}`, // Append URL to text for better visibility
                             files: [file],
                             url: shareUrl
                           });
@@ -164,7 +164,7 @@ const ProductDetail: React.FC = () => {
                       }
                     } else {
                       // Fallback for desktop
-                      alert('Copy this link to share: ' + shareUrl);
+                      alert(`Copy this link to share:\n${shareText}\n${shareUrl}`);
                     }
                   }}
                   className="flex items-center gap-2 px-6 py-3 rounded-full bg-pink-50 text-pink-600 font-bold hover:bg-pink-100 transition-colors"
