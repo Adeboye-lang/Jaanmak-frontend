@@ -167,18 +167,19 @@ const Checkout: React.FC = () => {
         return;
       }
 
-      const paystack = new (window as any).PaystackPop();
-      paystack.newTransaction({
+      const handler = (window as any).PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         email: user?.email,
         amount: grandTotal * 100,
-        onSuccess: (transaction: any) => {
-          onSuccess(transaction);
+        ref: reference, // Use the generated reference
+        callback: (response: any) => {
+          onSuccess(response);
         },
-        onCancel: () => {
+        onClose: () => {
           onClose();
         }
       });
+      handler.openIframe();
     } catch (error: any) {
       console.error("Paystack Error:", error);
       alert("Payment initialization failed: " + error.message);
