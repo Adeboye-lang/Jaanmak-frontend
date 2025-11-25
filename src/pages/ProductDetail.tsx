@@ -135,18 +135,47 @@ const ProductDetail: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-center gap-6 pt-4">
-                <span className="text-sm text-gray-400 font-medium uppercase tracking-wider">Share</span>
-                <div className="flex gap-3">
-                  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white text-gray-400 hover:text-blue-600 hover:bg-blue-50 hover:scale-110 transition-all shadow-sm border border-gray-100">
+                <button
+                  onClick={async () => {
+                    if (navigator.share) {
+                      try {
+                        // Try to share with image if possible
+                        const response = await fetch(product.image);
+                        const blob = await response.blob();
+                        const file = new File([blob], 'product.png', { type: blob.type });
+
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                          await navigator.share({
+                            title: product.name,
+                            text: shareText,
+                            files: [file],
+                            url: shareUrl
+                          });
+                        } else {
+                          throw new Error('Files not shareable');
+                        }
+                      } catch (err) {
+                        // Fallback to just text/url
+                        navigator.share({
+                          title: product.name,
+                          text: shareText,
+                          url: shareUrl
+                        }).catch(console.error);
+                      }
+                    } else {
+                      // Fallback for desktop
+                      alert('Copy this link to share: ' + shareUrl);
+                    }
+                  }}
+                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-pink-50 text-pink-600 font-bold hover:bg-pink-100 transition-colors"
+                >
+                  <span className="uppercase tracking-wider text-sm">Share Product</span>
+                  <div className="flex gap-2">
                     <Facebook className="h-4 w-4" />
-                  </a>
-                  <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white text-gray-400 hover:text-sky-500 hover:bg-sky-50 hover:scale-110 transition-all shadow-sm border border-gray-100">
                     <Twitter className="h-4 w-4" />
-                  </a>
-                  <a href={`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`} target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white text-gray-400 hover:text-green-600 hover:bg-green-50 hover:scale-110 transition-all shadow-sm border border-gray-100">
                     <Phone className="h-4 w-4 rotate-90" />
-                  </a>
-                </div>
+                  </div>
+                </button>
               </div>
             </div>
           </div>

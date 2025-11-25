@@ -22,7 +22,7 @@ const AdminDashboard: React.FC = () => {
             refreshProducts();
             refreshOrders();
             getAllUsers();
-         }, 5000); 
+         }, 5000);
 
          return () => clearInterval(interval);
       } else {
@@ -240,6 +240,7 @@ const AdminDashboard: React.FC = () => {
                      <form onSubmit={handleSaveProduct} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input placeholder="Product Name" value={productForm.name || ''} onChange={e => setProductForm({ ...productForm, name: e.target.value })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200" />
                         <input placeholder="Price" type="number" value={productForm.price || 0} onChange={e => setProductForm({ ...productForm, price: Number(e.target.value) })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200" />
+                        <input placeholder="Stock Quantity" type="number" value={productForm.countInStock || 0} onChange={e => setProductForm({ ...productForm, countInStock: Number(e.target.value) })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200" />
                         <input placeholder="Category" value={productForm.category || ''} onChange={e => setProductForm({ ...productForm, category: e.target.value })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200" />
 
                         <div className="space-y-2">
