@@ -56,9 +56,9 @@ const AdminDashboard: React.FC = () => {
          }
          setProductForm({});
          refreshProducts(); // Force refresh
-      } catch (error) {
+      } catch (error: any) {
          console.error(error);
-         alert('Failed to save product. Please try again.');
+         alert(`Failed to save product: ${error.message || 'Unknown error'}`);
       } finally {
          setIsSubmitting(false);
       }
