@@ -270,6 +270,14 @@ const AdminDashboard: React.FC = () => {
                                     <p className="text-sm text-gray-500">₦{p.price.toLocaleString()}</p>
                                  </div>
                               </div>
+                              <div className="flex items-center gap-2">
+                                 <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${(p.countInStock || 0) === 0 ? 'bg-red-100 text-red-600' :
+                                       (p.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
+                                          'bg-green-100 text-green-600'
+                                    }`}>
+                                    {(p.countInStock || 0) === 0 ? 'Out of Stock' : `${p.countInStock} Left`}
+                                 </span>
+                              </div>
                               <div className="flex gap-3">
                                  <button onClick={() => setProductForm(p)} className="px-4 py-2 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200">Edit</button>
                                  <button onClick={() => handleDeleteProduct(p.id)} className="px-4 py-2 text-sm font-bold text-red-500 bg-red-50 rounded-lg hover:bg-red-100">Delete</button>
