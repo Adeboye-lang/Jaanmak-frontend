@@ -147,9 +147,9 @@ const ProductDetail: React.FC = () => {
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
                           await navigator.share({
                             title: product.name,
-                            text: `${shareText}\n${shareUrl}`, // Append URL to text for better visibility
-                            files: [file],
-                            url: shareUrl
+                            text: `${shareText} ${shareUrl}`, // URL in text acts as caption
+                            files: [file]
+                            // url: shareUrl // Removed to force caption behavior
                           });
                         } else {
                           throw new Error('Files not shareable');
