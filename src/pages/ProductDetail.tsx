@@ -23,7 +23,7 @@ const ProductDetail: React.FC = () => {
   const isOutOfStock = !product.inStock || (product.countInStock !== undefined && product.countInStock <= 0);
   const handleQuantityChange = (delta: number) => setQuantity(prev => Math.max(1, prev + delta));
   const shareUrl = window.location.href;
-  const shareText = `check out this product on jaanmak`;
+  const shareText = `Check out ${product.name} on Jaanmak`;
 
   const relatedProducts = products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3);
 
