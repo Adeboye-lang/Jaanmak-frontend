@@ -54,7 +54,7 @@ const Contact: React.FC = () => {
         <div className="bg-white rounded-[3rem] shadow-2xl shadow-pink-100/50 border border-white overflow-hidden flex flex-col lg:flex-row">
 
           {/* Contact Information Side */}
-          <div className="lg:w-2/5 bg-gray-900 text-white p-12 relative overflow-hidden">
+          <div className="lg:w-2/5 bg-gray-900 text-white p-8 md:p-12 relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-600 rounded-full mix-blend-overlay filter blur-3xl opacity-20"></div>
 

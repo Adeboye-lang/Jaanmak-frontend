@@ -73,6 +73,21 @@ const ProductDetail: React.FC = () => {
                   ₦{product.price.toLocaleString()}
                 </span>
               </div>
+
+              {/* Mobile Share Buttons */}
+              <div className="flex items-center gap-4 md:hidden pt-2 animate-fade-in">
+                <div className="flex gap-3">
+                  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-white text-gray-400 hover:text-blue-600 border border-pink-100 shadow-sm">
+                    <Facebook className="h-4 w-4" />
+                  </a>
+                  <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-white text-gray-400 hover:text-sky-500 border border-pink-100 shadow-sm">
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                  <a href={`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`} target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-full bg-white text-gray-400 hover:text-green-600 border border-pink-100 shadow-sm">
+                    <Phone className="h-4 w-4 rotate-90" />
+                  </a>
+                </div>
+              </div>
             </div>
 
             <div className="prose prose-pink max-w-none">

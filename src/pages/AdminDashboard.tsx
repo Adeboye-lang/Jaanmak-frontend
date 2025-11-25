@@ -262,7 +262,7 @@ const AdminDashboard: React.FC = () => {
                      <div className="p-8 border-b border-pink-50"><h3 className="text-xl font-bold text-gray-900">Product List</h3></div>
                      <div className="divide-y divide-gray-50">
                         {products.map(p => (
-                           <div key={p.id} className="p-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                           <div key={p.id} className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
                               <div className="flex items-center gap-4">
                                  <div className="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden"><img src={p.image} alt={p.name} className="w-full h-full object-cover" /></div>
                                  <div>
