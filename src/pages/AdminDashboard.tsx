@@ -8,6 +8,7 @@ const AdminDashboard: React.FC = () => {
    const { user, products, addProduct, updateProduct, deleteProduct, allUsers, getAllUsers, deleteUserAccount, orders, updateOrderStatus, refreshProducts, refreshOrders } = useStore();
    const [activeTab, setActiveTab] = useState('overview');
    const [productForm, setProductForm] = useState<Partial<Product>>({});
+   const [isSubmitting, setIsSubmitting] = useState(false);
    const navigate = useNavigate();
 
    useEffect(() => {
@@ -44,9 +45,28 @@ const AdminDashboard: React.FC = () => {
 
    const handleSaveProduct = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (productForm.id) await updateProduct(productForm as Product);
-      else await addProduct(productForm);
-      setProductForm({});
+      setIsSubmitting(true);
+      try {
+         if (productForm.id) {
+            await updateProduct(productForm as Product);
+            alert('Product updated successfully!');
+         } else {
+            await addProduct(productForm);
+            alert('Product created successfully!');
+         }
+         setProductForm({});
+         refreshProducts(); // Force refresh
+      } catch (error) {
+         console.error(error);
+         alert('Failed to save product. Please try again.');
+      } finally {
+         setIsSubmitting(false);
+      }
+   };
+
+   const handleEditClick = (product: Product) => {
+      setProductForm(product);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
    };
 
    const TabButton = ({ id, label, icon }: { id: string, label: string, icon?: React.ReactNode }) => (
@@ -186,7 +206,7 @@ const AdminDashboard: React.FC = () => {
                                     <h4 className="font-bold text-gray-900 text-sm truncate">{p.name}</h4>
                                     <p className="text-xs text-orange-600 font-medium">Only {p.countInStock} left</p>
                                  </div>
-                                 <button onClick={() => { setProductForm(p); setActiveTab('products'); }} className="text-xs bg-white px-2 py-1 rounded border border-orange-200 text-orange-600 font-bold hover:bg-orange-100">Restock</button>
+                                 <button onClick={() => { handleEditClick(p); setActiveTab('products'); }} className="text-xs bg-white px-2 py-1 rounded border border-orange-200 text-orange-600 font-bold hover:bg-orange-100">Restock</button>
                               </div>
                            )) : (
                               <div className="text-center text-gray-400 py-8">All products are well stocked!</div>
@@ -236,7 +256,7 @@ const AdminDashboard: React.FC = () => {
             {activeTab === 'products' && (
                <div className="space-y-8">
                   <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-pink-50">
-                     <h3 className="text-xl font-bold mb-6 text-gray-900">Add / Edit Product</h3>
+                     <h3 className="text-xl font-bold mb-6 text-gray-900">{productForm.id ? 'Edit Product' : 'Add New Product'}</h3>
                      <form onSubmit={handleSaveProduct} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input placeholder="Product Name" value={productForm.name || ''} onChange={e => setProductForm({ ...productForm, name: e.target.value })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200" />
                         <input placeholder="Price" type="number" value={productForm.price || 0} onChange={e => setProductForm({ ...productForm, price: Number(e.target.value) })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200" />
@@ -253,7 +273,9 @@ const AdminDashboard: React.FC = () => {
 
                         <textarea placeholder="Description" value={productForm.description || ''} onChange={e => setProductForm({ ...productForm, description: e.target.value })} className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-200 md:col-span-2 h-32 resize-none" />
                         <div className="md:col-span-2">
-                           <button type="submit" className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-gray-800 transition-colors">Save Product</button>
+                           <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                              {isSubmitting ? 'Saving...' : productForm.id ? 'Update Product' : 'Create Product'}
+                           </button>
                         </div>
                      </form>
                   </div>
@@ -272,14 +294,14 @@ const AdminDashboard: React.FC = () => {
                               </div>
                               <div className="flex items-center gap-2">
                                  <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${(p.countInStock || 0) === 0 ? 'bg-red-100 text-red-600' :
-                                       (p.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
-                                          'bg-green-100 text-green-600'
+                                    (p.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
+                                       'bg-green-100 text-green-600'
                                     }`}>
                                     {(p.countInStock || 0) === 0 ? 'Out of Stock' : `${p.countInStock} Left`}
                                  </span>
                               </div>
                               <div className="flex gap-3">
-                                 <button onClick={() => setProductForm(p)} className="px-4 py-2 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200">Edit</button>
+                                 <button onClick={() => handleEditClick(p)} className="px-4 py-2 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200">Edit</button>
                                  <button onClick={() => handleDeleteProduct(p.id)} className="px-4 py-2 text-sm font-bold text-red-500 bg-red-50 rounded-lg hover:bg-red-100">Delete</button>
                               </div>
                            </div>
