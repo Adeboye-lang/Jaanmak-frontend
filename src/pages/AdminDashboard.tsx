@@ -322,6 +322,7 @@ const AdminDashboard: React.FC = () => {
                                  <div>
                                     <h4 className="font-bold text-gray-900">{p.name}</h4>
                                     <p className="text-sm text-gray-500">₦{p.price.toLocaleString()}</p>
+                                    {p.weight && <span className="inline-block mt-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold uppercase rounded">{p.weight}</span>}
                                  </div>
                               </div>
                               <div className="w-full sm:w-auto flex items-center gap-2">
