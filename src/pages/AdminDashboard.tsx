@@ -320,8 +320,8 @@ const AdminDashboard: React.FC = () => {
                               </div>
                               <div className="w-full sm:w-auto flex items-center gap-2">
                                  <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider w-full sm:w-auto text-center ${(p.countInStock || 0) === 0 ? 'bg-red-100 text-red-600' :
-                                       (p.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
-                                          'bg-green-100 text-green-600'
+                                    (p.countInStock || 0) < 10 ? 'bg-orange-100 text-orange-600' :
+                                       'bg-green-100 text-green-600'
                                     }`}>
                                     {(p.countInStock || 0) === 0 ? 'Out of Stock' : `${p.countInStock} Left`}
                                  </span>
@@ -388,7 +388,10 @@ const AdminDashboard: React.FC = () => {
                                  <div className="flex gap-2">
                                     {order.status !== 'Processing' && (
                                        <button
-                                          onClick={() => updateOrderStatus(order.id, 'Processing')}
+                                          onClick={async () => {
+                                             await updateOrderStatus(order.id, 'Processing');
+                                             alert('Order marked as Processing.');
+                                          }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200 transition-colors"
                                        >
                                           Processing
@@ -396,7 +399,10 @@ const AdminDashboard: React.FC = () => {
                                     )}
                                     {order.status !== 'Shipped' && (
                                        <button
-                                          onClick={() => updateOrderStatus(order.id, 'Shipped')}
+                                          onClick={async () => {
+                                             await updateOrderStatus(order.id, 'Shipped');
+                                             alert('Order marked as Shipped. Customer has been notified via email.');
+                                          }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors"
                                        >
                                           Shipped
@@ -404,7 +410,10 @@ const AdminDashboard: React.FC = () => {
                                     )}
                                     {order.status !== 'Delivered' && (
                                        <button
-                                          onClick={() => updateOrderStatus(order.id, 'Delivered')}
+                                          onClick={async () => {
+                                             await updateOrderStatus(order.id, 'Delivered');
+                                             alert('Order marked as Delivered. Customer has been notified via email.');
+                                          }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-green-50 hover:text-green-600 hover:border-green-200 transition-colors"
                                        >
                                           Delivered
@@ -412,7 +421,10 @@ const AdminDashboard: React.FC = () => {
                                     )}
                                     {order.status !== 'Ready for Pickup' && order.status !== 'Delivered' && (
                                        <button
-                                          onClick={() => updateOrderStatus(order.id, 'Ready for Pickup')}
+                                          onClick={async () => {
+                                             await updateOrderStatus(order.id, 'Ready for Pickup');
+                                             alert('Order is Ready for Pickup. Customer has been notified via email with GIG Logistics details.');
+                                          }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors"
                                        >
                                           Ready for Pickup
