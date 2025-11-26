@@ -389,8 +389,9 @@ const AdminDashboard: React.FC = () => {
                                     {order.status !== 'Processing' && (
                                        <button
                                           onClick={async () => {
-                                             await updateOrderStatus(order.id, 'Processing');
-                                             alert('Order marked as Processing.');
+                                             const res = await updateOrderStatus(order.id, 'Processing');
+                                             if (res) alert('Order marked as Processing.');
+                                             else alert('Failed to update order status.');
                                           }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-yellow-50 hover:text-yellow-600 hover:border-yellow-200 transition-colors"
                                        >
@@ -401,7 +402,8 @@ const AdminDashboard: React.FC = () => {
                                        <button
                                           onClick={async () => {
                                              const res = await updateOrderStatus(order.id, 'Shipped');
-                                             alert(`Order marked as Shipped. Email sent to: ${res?.emailSentTo || 'Customer'}`);
+                                             if (res) alert(`Order marked as Shipped. Email sent to: ${res.emailSentTo || 'Customer'}`);
+                                             else alert('Failed to update order status.');
                                           }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors"
                                        >
@@ -412,7 +414,8 @@ const AdminDashboard: React.FC = () => {
                                        <button
                                           onClick={async () => {
                                              const res = await updateOrderStatus(order.id, 'Delivered');
-                                             alert(`Order marked as Delivered. Email sent to: ${res?.emailSentTo || 'Customer'}`);
+                                             if (res) alert(`Order marked as Delivered. Email sent to: ${res.emailSentTo || 'Customer'}`);
+                                             else alert('Failed to update order status.');
                                           }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-green-50 hover:text-green-600 hover:border-green-200 transition-colors"
                                        >
@@ -423,7 +426,8 @@ const AdminDashboard: React.FC = () => {
                                        <button
                                           onClick={async () => {
                                              const res = await updateOrderStatus(order.id, 'Ready for Pickup');
-                                             alert(`Order is Ready for Pickup. Email sent to: ${res?.emailSentTo || 'Customer'}`);
+                                             if (res) alert(`Order is Ready for Pickup. Email sent to: ${res.emailSentTo || 'Customer'}`);
+                                             else alert('Failed to update order status.');
                                           }}
                                           className="px-3 py-1 text-xs font-bold bg-white border border-gray-200 rounded-lg hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors"
                                        >
