@@ -66,9 +66,16 @@ const ProductDetail: React.FC = () => {
           {/* Details Section */}
           <div className="space-y-8 md:space-y-10 pt-4">
             <div className="space-y-4">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-pink-600 text-xs font-bold tracking-[0.2em] uppercase">
-                {product.category}
-              </span>
+              <div className="flex gap-2">
+                <span className="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-pink-600 text-xs font-bold tracking-[0.2em] uppercase">
+                  {product.category}
+                </span>
+                {product.weight && (
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 text-xs font-bold tracking-[0.2em] uppercase">
+                    {product.weight}
+                  </span>
+                )}
+              </div>
               <h1 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 leading-tight">
                 {product.name}
               </h1>

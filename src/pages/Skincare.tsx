@@ -72,7 +72,9 @@ const Skincare: React.FC = () => {
                 </div>
               </div>
               <div className="p-8 flex-1 flex flex-col">
-                <p className="text-xs font-bold text-pink-500 uppercase tracking-widest mb-1">{product.category}</p>
+                <p className="text-xs font-bold text-pink-500 uppercase tracking-widest mb-1">
+                  {product.category} {product.weight && <span className="text-gray-400">• {product.weight}</span>}
+                </p>
                 <Link to={`/product/${product.id}`}><h3 className="text-xl font-serif font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors">{product.name}</h3></Link>
                 <p className="text-sm text-gray-500 mb-6 line-clamp-2">{product.description}</p>
                 <div className="flex flex-wrap gap-2 items-center justify-between mt-auto pt-4 border-t border-gray-50">

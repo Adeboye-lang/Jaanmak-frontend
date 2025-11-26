@@ -11,6 +11,7 @@ export interface Product {
   howToUse?: string;
   inStock?: boolean;
   countInStock?: number;
+  weight?: string;
 }
 
 export interface CartItem extends Product {
