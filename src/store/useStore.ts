@@ -40,7 +40,7 @@ interface StoreState {
 
     // Order Actions
     refreshOrders: () => Promise<void>;
-    updateOrderStatus: (id: string, status: Order['status']) => Promise<void>;
+    updateOrderStatus: (id: string, status: Order['status']) => Promise<any>;
     cancelOrder: (id: string) => Promise<void>;
     setOrders: (orders: Order[]) => void;
 }
@@ -222,6 +222,7 @@ export const useStore = create<StoreState>()(
                             deliveredAt: updatedOrder.deliveredAt
                         } : o)
                     });
+                    return updatedOrder;
                 } catch (error) { console.error("Failed to update order status", error); }
             },
             cancelOrder: async (id) => {
