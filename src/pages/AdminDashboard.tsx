@@ -409,11 +409,11 @@ const AdminDashboard: React.FC = () => {
                                  </div>
                               </div>
 
-                              <div className="flex items-center justify-between bg-gray-50 p-4 rounded-xl">
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-50 p-4 rounded-xl gap-4">
                                  <div className="text-sm text-gray-600">
                                     <span className="font-bold">Update Status:</span>
                                  </div>
-                                 <div className="flex gap-2">
+                                 <div className="flex flex-wrap gap-2">
                                     {order.status !== 'Processing' && (
                                        <button
                                           onClick={async () => {
@@ -478,7 +478,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="p-8 border-b border-pink-50"><h3 className="text-xl font-bold text-gray-900">Registered Users</h3></div>
                   <div className="divide-y divide-gray-50">
                      {allUsers.map(u => (
-                        <div key={u.id} className="p-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                        <div key={u.id} className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
                            <div className="flex items-center gap-4">
                               <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 font-bold">{u.name.charAt(0)}</div>
                               <div>
@@ -486,7 +486,7 @@ const AdminDashboard: React.FC = () => {
                                  <p className="text-sm text-gray-500">{u.email}</p>
                               </div>
                            </div>
-                           <div className="flex items-center gap-4">
+                           <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-start">
                               <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${u.isAdmin ? 'bg-purple-100 text-purple-600' : 'bg-green-100 text-green-600'}`}>{u.role || 'User'}</span>
                               {!u.isAdmin && <button onClick={() => deleteUserAccount(u.id!)} className="text-red-500 hover:text-red-700 font-bold text-sm">Remove</button>}
                            </div>
