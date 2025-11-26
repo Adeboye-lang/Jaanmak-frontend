@@ -365,6 +365,22 @@ const AdminDashboard: React.FC = () => {
                                  </div>
                               </div>
 
+                              {/* Order Items List */}
+                              <div className="bg-pink-50/50 p-4 rounded-xl mb-4 border border-pink-100">
+                                 <h5 className="text-xs font-bold uppercase text-pink-500 mb-2">Items Ordered</h5>
+                                 <div className="space-y-2">
+                                    {order.orderItems.map((item, index) => (
+                                       <div key={index} className="flex justify-between items-center text-sm">
+                                          <div className="flex items-center gap-2">
+                                             <span className="font-medium text-gray-900">{item.name}</span>
+                                             <span className="text-xs text-gray-500">x{item.quantity}</span>
+                                          </div>
+                                          <span className="text-gray-600">₦{item.price.toLocaleString()}</span>
+                                       </div>
+                                    ))}
+                                 </div>
+                              </div>
+
                               <div className="bg-gray-50 p-4 rounded-xl mb-4">
                                  <h5 className="text-xs font-bold uppercase text-gray-500 mb-2">Shipping Details</h5>
                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
