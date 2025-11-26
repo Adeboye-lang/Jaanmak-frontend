@@ -346,8 +346,14 @@ const AdminDashboard: React.FC = () => {
                            <div key={order.id} className="p-6 hover:bg-gray-50 transition-colors">
                               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                  <div>
-                                    <div className="flex items-center gap-3 mb-1">
-                                       <h4 className="font-bold text-gray-900">Order #{order.id.substring(0, 8)}...</h4>
+                                    <div className="mb-2">
+                                       <h4 className="font-bold text-gray-900 text-lg">Order #{order.id.substring(0, 8)}</h4>
+                                       <p className="text-gray-600 font-medium mt-1">
+                                          Customer: <span className="text-gray-900 font-bold text-base">{order.user?.name || 'Guest'}</span>
+                                       </p>
+                                       <p className="text-xs text-gray-400 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2 mt-2">
                                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${order.status === 'Delivered' ? 'bg-green-100 text-green-600' :
                                           order.status === 'Shipped' ? 'bg-blue-100 text-blue-600' :
                                              order.status === 'Processing' ? 'bg-yellow-100 text-yellow-600' :
@@ -357,7 +363,6 @@ const AdminDashboard: React.FC = () => {
                                           {order.status}
                                        </span>
                                     </div>
-                                    <p className="text-sm text-gray-500">{order.user?.name || 'Guest'} • {new Date(order.createdAt).toLocaleDateString()}</p>
                                  </div>
                                  <div className="text-right">
                                     <p className="font-bold text-gray-900">₦{order.totalPrice.toLocaleString()}</p>
