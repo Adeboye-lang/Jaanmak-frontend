@@ -96,10 +96,15 @@ const AdminDashboard: React.FC = () => {
       }
    };
 
-   const handleSeedDatabase = async () => {
-      if (window.confirm('This will import all demo products into your database. Continue?')) {
+   const handleResetDatabase = async () => {
+      if (window.confirm('WARNING: This will DELETE ALL existing products and re-import the demo data. Are you sure?')) {
          setIsSubmitting(true);
          try {
+            // 1. Delete all existing products
+            const deletePromises = products.map(p => deleteProduct(p.id));
+            await Promise.all(deletePromises);
+
+            // 2. Import new data
             const { SKINCARE_PRODUCTS } = await import('../data/products');
             let count = 0;
             for (const p of SKINCARE_PRODUCTS) {
@@ -108,11 +113,11 @@ const AdminDashboard: React.FC = () => {
                await addProduct(productData);
                count++;
             }
-            alert(`Successfully imported ${count} products!`);
+            alert(`Database reset successfully! Imported ${count} products.`);
             refreshProducts();
          } catch (error) {
             console.error(error);
-            alert('Failed to seed database.');
+            alert('Failed to reset database.');
          } finally {
             setIsSubmitting(false);
          }
@@ -187,7 +192,7 @@ const AdminDashboard: React.FC = () => {
                         <h3 className="text-pink-100 text-xs font-bold uppercase tracking-wider mb-2">Quick Action</h3>
                         <div className="flex flex-col gap-2 w-full">
                            <button onClick={() => setActiveTab('products')} className="bg-white text-pink-600 px-6 py-2 rounded-xl font-bold text-sm hover:bg-pink-50 transition-colors w-full">Add Product</button>
-                           <button onClick={handleSeedDatabase} className="bg-pink-600 text-white border border-pink-400 px-6 py-2 rounded-xl font-bold text-sm hover:bg-pink-700 transition-colors w-full">Import Demo Data</button>
+                           <button onClick={handleResetDatabase} className="bg-pink-600 text-white border border-pink-400 px-6 py-2 rounded-xl font-bold text-sm hover:bg-pink-700 transition-colors w-full">Reset Database</button>
                         </div>
                      </div>
                   </div>
