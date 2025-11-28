@@ -45,7 +45,7 @@ const ShippingReturns = () => {
                                 <ul className="space-y-4">
                                     <li className="flex justify-between items-center border-b border-pink-100 pb-3 last:border-0 last:pb-0">
                                         <span className="font-medium text-gray-700">Lagos</span>
-                                        <span className="text-pink-600 font-bold">2-3 business days</span>
+                                        <span className="text-pink-600 font-bold">3-5 business days</span>
                                     </li>
                                     <li className="flex justify-between items-center border-b border-pink-100 pb-3 last:border-0 last:pb-0">
                                         <span className="font-medium text-gray-700">Abuja</span>
