@@ -6,7 +6,7 @@ import { Package, Truck, CheckCircle, Clock, MapPin, ChevronRight, ArrowLeft, Re
 import { api } from '../services/api';
 
 const UserDashboard: React.FC = () => {
-   const { user, updateUserProfile, orders, cancelOrder, setOrders, wishlist, logout } = useStore();
+   const { user, updateUserProfile, orders, cancelOrder, setOrders, wishlist, logout, refreshOrders: storeRefreshOrders } = useStore();
    const navigate = useNavigate();
    const [activeTab, setActiveTab] = useState('profile');
    const [formData, setFormData] = useState({ name: '', phone: '', address: '', city: '', state: '' });
@@ -30,23 +30,14 @@ const UserDashboard: React.FC = () => {
    useEffect(() => {
       if (!user) return;
 
-      const fetchOrders = async () => {
-         try {
-            const data = await api.orders.getMyOrders(user.token!);
-            setOrders(data);
-         } catch (error) {
-            console.error("Failed to poll orders:", error);
-         }
-      };
-
       // Initial fetch
-      fetchOrders();
+      storeRefreshOrders();
 
       // Poll every 5 seconds
-      const intervalId = setInterval(fetchOrders, 5000);
+      const intervalId = setInterval(storeRefreshOrders, 5000);
 
       return () => clearInterval(intervalId);
-   }, [user, setOrders]);
+   }, [user, storeRefreshOrders]);
 
    const handleSave = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -69,8 +60,7 @@ const UserDashboard: React.FC = () => {
       if (!user) return;
       setIsRefreshing(true);
       try {
-         const data = await api.orders.getMyOrders(user.token!);
-         setOrders(data);
+         await storeRefreshOrders();
       } catch (error) {
          console.error("Failed to refresh orders:", error);
       } finally {
@@ -92,7 +82,7 @@ const UserDashboard: React.FC = () => {
    if (!user) return null;
 
    const selectedOrder = orders.find(o => o.id === trackingOrder);
-   const myOrders = orders.filter(o => o.email === user.email);
+   const myOrders = orders;
    const activeOrders = myOrders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
    return (
