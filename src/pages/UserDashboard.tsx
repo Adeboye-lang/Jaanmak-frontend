@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Package, Truck, CheckCircle, Clock, MapPin, ChevronRight, ArrowLeft, RefreshCw, Box, Heart, ShoppingBag, LogOut, Search } from 'lucide-react';
-import { api } from '../services/api';
 
 const UserDashboard: React.FC = () => {
-   const { user, updateUserProfile, orders, cancelOrder, setOrders, wishlist, logout, refreshOrders: storeRefreshOrders } = useStore();
+   const { user, updateUserProfile, orders, cancelOrder, wishlist, logout, refreshOrders: storeRefreshOrders } = useStore();
    const navigate = useNavigate();
    const [activeTab, setActiveTab] = useState('profile');
    const [formData, setFormData] = useState({ name: '', phone: '', address: '', city: '', state: '' });
